@@ -997,15 +997,19 @@ class WiFiScanner:
         for n, network in network_list_items:
             number = f'{n})'
             model = '{} {}'.format(network['Model'], network['Model number'])
-            essid = truncateStr(network['ESSID'], 25)
+            essid = truncateStr(network['ESSID','Unknown'], 25)
             deviceName = truncateStr(network['Device name'], 27)
             line = '{:<4} {:<18} {:<25} {:<8} {:<4} {:<27} {:<}'.format(
                 number, network['BSSID'], essid,
                 network['Security type'], network['Level'],
                 deviceName, model
                 )
-            if (network['BSSID'], network['ESSID']) in self.stored:
+            try:
+                if (network['BSSID'], network['ESSID']) in self.stored:
                 print(colored(line, color='yellow'))
+            except Exception as e:
+                if (network['BSSID']) in self.stored:
+                print('ESSID UNKNOWN'+colored(line, color='yellow'))
             elif network['WPS locked']:
                 print(colored(line, color='red'))
             elif self.vuln_list and (model in self.vuln_list):
