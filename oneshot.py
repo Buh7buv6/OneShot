@@ -1010,12 +1010,12 @@ class WiFiScanner:
             except Exception as e:
                 if (network['BSSID']) in self.stored:
                     print('ESSID UNKNOWN'+colored(line, color='yellow'))
-            elif network['WPS locked']:
-                print(colored(line, color='red'))
-            elif self.vuln_list and (model in self.vuln_list):
-                print(colored(line, color='green'))
-            else:
-                print(line)
+                elif network['WPS locked']:
+                    print(colored(line, color='red'))
+                elif self.vuln_list and (model in self.vuln_list):
+                    print(colored(line, color='green'))
+                else:
+                    print(line)
 
         return network_list
 
